@@ -8,18 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		159A9F407108953C871151AB /* Pods_TCS_Teste.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5056F906A561CC0ACA11B029 /* Pods_TCS_Teste.framework */; };
+		9A4AA9C62134EC1D00FC6922 /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4AA9C52134EC1D00FC6922 /* String+Validations.swift */; };
 		9AF8448A2132FBC200603B95 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF844892132FBC200603B95 /* AppDelegate.swift */; };
 		9AF8448C2132FBC200603B95 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8448B2132FBC200603B95 /* RegistrationViewController.swift */; };
 		9AF8448F2132FBC200603B95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AF8448D2132FBC200603B95 /* Main.storyboard */; };
 		9AF844912132FBC300603B95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AF844902132FBC300603B95 /* Assets.xcassets */; };
 		9AF844942132FBC300603B95 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AF844922132FBC300603B95 /* LaunchScreen.storyboard */; };
-		9AF8449D2133290000603B95 /* RegistrationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8449C2133290000603B95 /* RegistrationForm.swift */; };
-		9AF844A1213330C800603B95 /* DictionaryInitialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF844A0213330C800603B95 /* DictionaryInitialization.swift */; };
+		9AF8449D2133290000603B95 /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8449C2133290000603B95 /* FormField.swift */; };
 		9AF844A42133322300603B95 /* ServerAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF844A32133322300603B95 /* ServerAPIService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5056F906A561CC0ACA11B029 /* Pods_TCS_Teste.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TCS_Teste.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A4AA9C52134EC1D00FC6922 /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
 		9AF844862132FBC200603B95 /* TCS-Teste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TCS-Teste.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AF844892132FBC200603B95 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9AF8448B2132FBC200603B95 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
@@ -27,8 +28,7 @@
 		9AF844902132FBC300603B95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9AF844932132FBC300603B95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9AF844952132FBC300603B95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9AF8449C2133290000603B95 /* RegistrationForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationForm.swift; sourceTree = "<group>"; };
-		9AF844A0213330C800603B95 /* DictionaryInitialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryInitialization.swift; sourceTree = "<group>"; };
+		9AF8449C2133290000603B95 /* FormField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
 		9AF844A32133322300603B95 /* ServerAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerAPIService.swift; sourceTree = "<group>"; };
 		B005F1AF4F9293C5CA297BA4 /* Pods-TCS-Teste.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TCS-Teste.release.xcconfig"; path = "Pods/Target Support Files/Pods-TCS-Teste/Pods-TCS-Teste.release.xcconfig"; sourceTree = "<group>"; };
 		F707494A87A3DBD30012F71A /* Pods-TCS-Teste.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TCS-Teste.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TCS-Teste/Pods-TCS-Teste.debug.xcconfig"; sourceTree = "<group>"; };
@@ -91,7 +91,7 @@
 		9AF8449B2133289B00603B95 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9AF8449C2133290000603B95 /* RegistrationForm.swift */,
+				9AF8449C2133290000603B95 /* FormField.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -109,7 +109,6 @@
 		9AF8449F21332FFB00603B95 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				9AF844A0213330C800603B95 /* DictionaryInitialization.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -125,6 +124,7 @@
 		9AF844A521333F1B00603B95 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9A4AA9C52134EC1D00FC6922 /* String+Validations.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -249,11 +249,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AF8449D2133290000603B95 /* RegistrationForm.swift in Sources */,
+				9AF8449D2133290000603B95 /* FormField.swift in Sources */,
+				9A4AA9C62134EC1D00FC6922 /* String+Validations.swift in Sources */,
 				9AF8448C2132FBC200603B95 /* RegistrationViewController.swift in Sources */,
 				9AF844A42133322300603B95 /* ServerAPIService.swift in Sources */,
 				9AF8448A2132FBC200603B95 /* AppDelegate.swift in Sources */,
-				9AF844A1213330C800603B95 /* DictionaryInitialization.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@ import UIKit
 
 class RegistrationViewController: UIViewController {
     
-    var fieldset:[(field: RegistrationForm, fieldComponent: UIView)] = []
+    var fieldset:[(field: FormField, fieldComponent: UIView)] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +19,7 @@ class RegistrationViewController: UIViewController {
     }
     
     func loadRegistrationFormFields() {
-        RegistrationForm.fetchFromServer { (regFormfields) in
+        FormField.fetchFromServer { (regFormfields) in
             DispatchQueue.main.async {
                 
                 if let regFormFields = regFormfields {
@@ -39,49 +39,8 @@ class RegistrationViewController: UIViewController {
         }
     }
     
-    
-    func setLayoutConstraints() {
-        // If there's no previous, the main view is the baseline for constraints
-        var previousField: UIView = self.view
-        
-        for fieldTuple in fieldset {
-            var heightOffset: CGFloat = 25
-            let field = fieldTuple.field
-            let fieldComponent = fieldTuple.fieldComponent
-            
-            fieldComponent.removeFromSuperview()
-            self.view.addSubview(fieldComponent)
-            
-            if (!previousField.isEqual(self.view)) {
-                heightOffset = previousField.bounds.height
-            }
-            
-            if (field.type == .checkbox) {
-                let switchLabel = UILabel()
-                switchLabel.text = field.message
-                
-                self.view.addSubview(switchLabel)
-                switchLabel.translatesAutoresizingMaskIntoConstraints = false
-                
-                switchLabel.topAnchor.constraint(equalTo: previousField.topAnchor, constant: CGFloat(field.topSpacing) + heightOffset).isActive = true
-                switchLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16).isActive = true
-                
-                fieldComponent.topAnchor.constraint(equalTo: previousField.topAnchor, constant: CGFloat(field.topSpacing) + heightOffset).isActive = true
-                fieldComponent.leftAnchor.constraint(equalTo: switchLabel.rightAnchor, constant: 16).isActive = true
-                fieldComponent.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16).isActive = true
-                
-            } else {
-                fieldComponent.bounds.size.width = self.view.bounds.size.width - 32
-                fieldComponent.bounds.size.height = 30
-                fieldComponent.topAnchor.constraint(equalTo: previousField.topAnchor, constant: CGFloat(field.topSpacing) + heightOffset).isActive = true
-                fieldComponent.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16).isActive = true
-                fieldComponent.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16).isActive = true
-            }
-            
-            if !fieldComponent.isHidden {
-                previousField = fieldComponent
-            }
-        }
+    @objc func sendAction(_ sender:UIButton!) {
+        print("Button tapped")
     }
     
     // Switch value changed
@@ -97,6 +56,8 @@ class RegistrationViewController: UIViewController {
                 }
             }
         }
+        
+        validateFormFields()
     }
     
     // Changes field visibility according to its' ID
@@ -109,7 +70,40 @@ class RegistrationViewController: UIViewController {
         }
     }
     
-    func createUIElement(for field: RegistrationForm) -> UIView {
+    func validateFormFields() {
+        var isValid = true
+        
+        for fieldTuple in fieldset {
+            if fieldTuple.field.type == .field {
+                let textField = fieldTuple.fieldComponent as! UITextField
+                
+                isValid = isValid && FormField.validateField(formField: fieldTuple.field, fieldContent: textField.text)
+            }
+        }
+        
+        enableSendButton(enable: isValid)
+    }
+    
+    func enableSendButton(enable: Bool) {
+        for fieldTuple in fieldset {
+            if fieldTuple.field.type == .send {
+                let button = fieldTuple.fieldComponent as! UIButton
+                
+                if enable {
+                    button.backgroundColor = UIColor.blue
+                    button.tintColor = UIColor.white
+                    button.isEnabled = true
+                } else {
+                    button.backgroundColor = UIColor.lightGray
+                    button.tintColor = UIColor.gray
+                    button.isEnabled = false
+                }
+                
+            }
+        }
+    }
+    
+    func createUIElement(for field: FormField) -> UIView {
         let fieldComp: UIView
         
         switch field.type {
@@ -169,6 +163,7 @@ class RegistrationViewController: UIViewController {
             let button = UIButton()
             button.setTitle(field.message, for: .normal)
             button.backgroundColor = UIColor.blue
+            button.addTarget(self, action: #selector(self.sendAction(_:)), for: .touchUpInside)
             
             fieldComp = button
             
@@ -176,6 +171,51 @@ class RegistrationViewController: UIViewController {
         }
         
         return fieldComp
+    }
+    
+    // Configures layout constraints for every field fectched from the server
+    func setLayoutConstraints() {
+        // If there's no previous, the main view is the baseline for constraints
+        var previousField: UIView = self.view
+        
+        for fieldTuple in fieldset {
+            var heightOffset: CGFloat = 25
+            let field = fieldTuple.field
+            let fieldComponent = fieldTuple.fieldComponent
+            
+            fieldComponent.removeFromSuperview()
+            self.view.addSubview(fieldComponent)
+            
+            if (!previousField.isEqual(self.view)) {
+                heightOffset = previousField.bounds.height
+            }
+            
+            if (field.type == .checkbox) {
+                let switchLabel = UILabel()
+                switchLabel.text = field.message
+                
+                self.view.addSubview(switchLabel)
+                switchLabel.translatesAutoresizingMaskIntoConstraints = false
+                
+                switchLabel.topAnchor.constraint(equalTo: previousField.topAnchor, constant: CGFloat(field.topSpacing) + heightOffset).isActive = true
+                switchLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16).isActive = true
+                
+                fieldComponent.topAnchor.constraint(equalTo: previousField.topAnchor, constant: CGFloat(field.topSpacing) + heightOffset).isActive = true
+                fieldComponent.leftAnchor.constraint(equalTo: switchLabel.rightAnchor, constant: 16).isActive = true
+                fieldComponent.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16).isActive = true
+                
+            } else {
+                fieldComponent.bounds.size.width = self.view.bounds.size.width - 32
+                fieldComponent.bounds.size.height = 30
+                fieldComponent.topAnchor.constraint(equalTo: previousField.topAnchor, constant: CGFloat(field.topSpacing) + heightOffset).isActive = true
+                fieldComponent.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16).isActive = true
+                fieldComponent.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16).isActive = true
+            }
+            
+            if !fieldComponent.isHidden {
+                previousField = fieldComponent
+            }
+        }
     }
 }
 

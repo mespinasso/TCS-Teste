@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RegistrationForm : DictionaryInitialization {
+class FormField {
     let id: Int
     let type: Type
     let message: String
@@ -60,25 +60,49 @@ enum TypeField: String {
 }
 
 // Server API fetching
-extension RegistrationForm {
+extension FormField {
     
     static let apiEndpoint = "cells.json"
     
-    static func fetchFromServer(completion: @escaping ([RegistrationForm]?) -> Void) {
+    static func fetchFromServer(completion: @escaping ([FormField]?) -> Void) {
         let service = ServerAPIService(apiEndpoint: apiEndpoint)
         service.get { (jsonDictionary) in
             
             if let jsonDictionary = jsonDictionary {
                 if let regFormArrayDic = jsonDictionary["cells"] as? [[String : Any]] {
                     
-                    var registrationFormArray: [RegistrationForm] = []
+                    var registrationFormArray: [FormField] = []
                     for entry in regFormArrayDic {
-                        registrationFormArray.append(RegistrationForm(dictionary: entry))
+                        registrationFormArray.append(FormField(dictionary: entry))
                     }
                     
                     completion(registrationFormArray)
                 }
             }
         }
+    }
+}
+
+// Form fields validation
+extension FormField {
+    
+    static func validateField(formField: FormField, fieldContent: String?) -> Bool {
+        
+        guard formField.type == .field else {
+            return true
+        }
+        
+        if let typeField = formField.typefield, let fieldContent = fieldContent {
+            switch typeField {
+            case .telNumber:
+                return fieldContent.isValidPhone()
+            case .email:
+                return fieldContent.isValidEmail()
+            case .text:
+                return fieldContent.isValidText()
+            }
+        }
+        
+        return false
     }
 }
