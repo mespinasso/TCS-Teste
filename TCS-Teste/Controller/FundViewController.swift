@@ -16,10 +16,12 @@ class FundViewController: UIViewController, UITableViewDelegate, UITableViewData
     var dataSource: Fund?
     let sections: [FundInfoSection] = [FundInfoSection.general, FundInfoSection.info, FundInfoSection.downInfo]
     
+    // MARK: - Setting up
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        prepareActivityIndicator()
+        self.prepareActivityIndicator(activityIndicator: activityIndicator)
         
         fundTableView.delegate = self
         fundTableView.dataSource = self
@@ -28,21 +30,6 @@ class FundViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadFund()
-    }
-    
-    // MARK: - Setting up
-    
-    func prepareActivityIndicator() {
-        view.addSubview(activityIndicator)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.color = UIColor.black
-        
-        let horizontalConstraint = NSLayoutConstraint(item: activityIndicator, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
-        view.addConstraint(horizontalConstraint)
-        
-        let verticalConstraint = NSLayoutConstraint(item: activityIndicator, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
-        view.addConstraint(verticalConstraint)
     }
     
     // MARK: - Fetching data

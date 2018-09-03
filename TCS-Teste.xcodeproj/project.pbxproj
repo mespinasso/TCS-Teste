@@ -12,6 +12,8 @@
 		9A4AA9C62134EC1D00FC6922 /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4AA9C52134EC1D00FC6922 /* String+Validations.swift */; };
 		9ABE941B213C965D00C10490 /* FundInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE941A213C965D00C10490 /* FundInfo.swift */; };
 		9ABE941D213C9A2300C10490 /* FundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE941C213C9A2300C10490 /* FundViewController.swift */; };
+		9ABE9421213CCF8300C10490 /* UIViewController+ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE9420213CCF8300C10490 /* UIViewController+ActivityIndicator.swift */; };
+		9ABE9425213CD2B300C10490 /* RegistrationSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE9424213CD2B300C10490 /* RegistrationSuccessViewController.swift */; };
 		9AF8448A2132FBC200603B95 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF844892132FBC200603B95 /* AppDelegate.swift */; };
 		9AF8448C2132FBC200603B95 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF8448B2132FBC200603B95 /* RegistrationViewController.swift */; };
 		9AF8448F2132FBC200603B95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AF8448D2132FBC200603B95 /* Main.storyboard */; };
@@ -27,6 +29,8 @@
 		9A4AA9C52134EC1D00FC6922 /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
 		9ABE941A213C965D00C10490 /* FundInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundInfo.swift; sourceTree = "<group>"; };
 		9ABE941C213C9A2300C10490 /* FundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundViewController.swift; sourceTree = "<group>"; };
+		9ABE9420213CCF8300C10490 /* UIViewController+ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ActivityIndicator.swift"; sourceTree = "<group>"; };
+		9ABE9424213CD2B300C10490 /* RegistrationSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationSuccessViewController.swift; sourceTree = "<group>"; };
 		9AF844862132FBC200603B95 /* TCS-Teste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TCS-Teste.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AF844892132FBC200603B95 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9AF8448B2132FBC200603B95 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
@@ -67,6 +71,7 @@
 				9AF844892132FBC200603B95 /* AppDelegate.swift */,
 				9AF8448B2132FBC200603B95 /* RegistrationViewController.swift */,
 				9ABE941C213C9A2300C10490 /* FundViewController.swift */,
+				9ABE9424213CD2B300C10490 /* RegistrationSuccessViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -142,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				9A4AA9C52134EC1D00FC6922 /* String+Validations.swift */,
+				9ABE9420213CCF8300C10490 /* UIViewController+ActivityIndicator.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -267,8 +273,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A4281B3213C55B900E707E2 /* Fund.swift in Sources */,
+				9ABE9425213CD2B300C10490 /* RegistrationSuccessViewController.swift in Sources */,
 				9AF8449D2133290000603B95 /* FormField.swift in Sources */,
 				9A4AA9C62134EC1D00FC6922 /* String+Validations.swift in Sources */,
+				9ABE9421213CCF8300C10490 /* UIViewController+ActivityIndicator.swift in Sources */,
 				9AF8448C2132FBC200603B95 /* RegistrationViewController.swift in Sources */,
 				9ABE941B213C965D00C10490 /* FundInfo.swift in Sources */,
 				9AF844A42133322300603B95 /* ServerAPIService.swift in Sources */,

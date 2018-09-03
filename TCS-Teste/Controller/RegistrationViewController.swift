@@ -10,15 +10,21 @@ import UIKit
 
 class RegistrationViewController: UIViewController {
     
-    var fieldset:[(field: FormField, fieldComponent: UIView)] = []
-
+    var activityIndicator = UIActivityIndicatorView()
+    var fieldset:[(field: FormField, fieldComponent: UIView, enableValidation: Bool)] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.prepareActivityIndicator(activityIndicator: activityIndicator)
         loadRegistrationFormFields()
     }
     
+    // MARK: - Fetching data
+    
     func loadRegistrationFormFields() {
+        activityIndicator.startAnimating()
+        
         FormField.fetchFromServer { (regFormfields) in
             DispatchQueue.main.async {
                 
@@ -30,20 +36,29 @@ class RegistrationViewController: UIViewController {
                         self.view.addSubview(fieldComp)
                         fieldComp.translatesAutoresizingMaskIntoConstraints = false
                         
-                        self.fieldset.append((field: field, fieldComponent: fieldComp))
+                        self.fieldset.append((field: field, fieldComponent: fieldComp, enableValidation: !field.hidden))
                     }
                     
+                    self.validateFormFields()
                     self.setLayoutConstraints()
+                    self.activityIndicator.stopAnimating()
                 }
             }
         }
     }
     
+    // MARK: - Events
+    
     @objc func sendAction(_ sender:UIButton!) {
-        print("Button tapped")
+        let storyboard = self.storyboard
+        
+        guard let successViewController = storyboard?.instantiateViewController(withIdentifier: "RegistrationSuccessViewController") as? RegistrationSuccessViewController else {
+            return
+        }
+        
+        self.navigationController?.pushViewController(successViewController, animated: true)
     }
     
-    // Switch value changed
     @objc func switchValueDidChange(_ sender: UISwitch) {
         for fieldTuple in fieldset {
             if let foundSwitch = fieldTuple.fieldComponent as? UISwitch {
@@ -52,6 +67,7 @@ class RegistrationViewController: UIViewController {
                     // Checks if the switch is related to the visibility of another field
                     if let fieldId = fieldTuple.field.show {
                         showField(withId: fieldId, sender.isOn)
+                        validateFormFields()
                     }
                 }
             }
@@ -61,25 +77,29 @@ class RegistrationViewController: UIViewController {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        
-        print("Event Triggered")
+        validateFormFields()
     }
     
     // Changes field visibility according to its' ID
     func showField(withId id: Int, _ show: Bool) {
-        for fieldTuple in fieldset {
+        fieldset[0].enableValidation = true
+        
+        for (index, fieldTuple) in fieldset.enumerated() {
             if fieldTuple.field.id == id {
                 fieldTuple.fieldComponent.isHidden = !show
+                fieldset[index].enableValidation = show
                 setLayoutConstraints()
             }
         }
     }
     
+    // MARK: - Validation
+    
     func validateFormFields() {
         var isValid = true
         
         for fieldTuple in fieldset {
-            if fieldTuple.field.type == .field {
+            if fieldTuple.field.type == .field && fieldTuple.enableValidation {
                 let textField = fieldTuple.fieldComponent as! UITextField
                 
                 isValid = isValid && FormField.validateField(formField: fieldTuple.field, fieldContent: textField.text)
@@ -108,6 +128,8 @@ class RegistrationViewController: UIViewController {
         }
     }
     
+    // MARK: - Setting layout constraints
+    
     func createUIElement(for field: FormField) -> UIView {
         let fieldComp: UIView
         
@@ -117,7 +139,7 @@ class RegistrationViewController: UIViewController {
             let textField = UITextField()
             textField.borderStyle = .roundedRect
             textField.placeholder = field.message
-            textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .valueChanged)
+            textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
             
             if let typeField = field.typefield {
                 switch(typeField) {
