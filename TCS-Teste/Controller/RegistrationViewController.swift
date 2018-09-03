@@ -11,7 +11,7 @@ import UIKit
 class RegistrationViewController: UIViewController {
     
     var fieldset:[(field: FormField, fieldComponent: UIView)] = []
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,6 +58,11 @@ class RegistrationViewController: UIViewController {
         }
         
         validateFormFields()
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        
+        print("Event Triggered")
     }
     
     // Changes field visibility according to its' ID
@@ -112,6 +117,7 @@ class RegistrationViewController: UIViewController {
             let textField = UITextField()
             textField.borderStyle = .roundedRect
             textField.placeholder = field.message
+            textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .valueChanged)
             
             if let typeField = field.typefield {
                 switch(typeField) {
@@ -123,6 +129,8 @@ class RegistrationViewController: UIViewController {
                 case .email:
                     textField.textContentType = .emailAddress
                     textField.keyboardType = .emailAddress
+                    textField.autocorrectionType = .no
+                    textField.spellCheckingType = .no
                     
                     break
                 case .text:
