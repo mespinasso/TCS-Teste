@@ -95,7 +95,7 @@ extension FormField {
         if let typeField = formField.typefield, let fieldContent = fieldContent {
             switch typeField {
             case .telNumber:
-                return fieldContent.isValidPhone()
+                return false
             case .email:
                 return fieldContent.isValidEmail()
             case .text:

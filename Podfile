@@ -7,5 +7,6 @@ target 'TCS-Teste' do
 
   # Pods for TCS-Teste
     pod 'Alamofire'
+    pod 'PhoneNumberKit'
 
 end

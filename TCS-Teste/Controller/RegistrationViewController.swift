@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PhoneNumberKit
 
 class RegistrationViewController: UIViewController {
     
@@ -100,9 +101,13 @@ class RegistrationViewController: UIViewController {
         
         for fieldTuple in fieldset {
             if fieldTuple.field.type == .field && fieldTuple.enableValidation {
-                let textField = fieldTuple.fieldComponent as! UITextField
-                
-                isValid = isValid && FormField.validateField(formField: fieldTuple.field, fieldContent: textField.text)
+                if fieldTuple.field.typefield != .telNumber {
+                    let textField = fieldTuple.fieldComponent as! UITextField
+                    isValid = isValid && FormField.validateField(formField: fieldTuple.field, fieldContent: textField.text)
+                } else {
+                    let textField = fieldTuple.fieldComponent as! PhoneNumberTextField
+                    isValid = isValid && textField.isValidNumber
+                }
             }
         }
         
@@ -136,33 +141,54 @@ class RegistrationViewController: UIViewController {
         switch field.type {
         case .field:
             
-            let textField = UITextField()
-            textField.borderStyle = .roundedRect
-            textField.placeholder = field.message
-            textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-            
             if let typeField = field.typefield {
                 switch(typeField) {
                 case .telNumber:
+                    let textField = PhoneNumberTextField()
+                    textField.borderStyle = .roundedRect
+                    textField.placeholder = field.message
+                    textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+                    
+                    textField.defaultRegion = "BR"
                     textField.textContentType = .telephoneNumber
                     textField.keyboardType = .phonePad
                     
+                    fieldComp = textField
+                    
                     break
                 case .email:
+                    let textField = UITextField()
+                    textField.borderStyle = .roundedRect
+                    textField.placeholder = field.message
+                    textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+                    
                     textField.textContentType = .emailAddress
                     textField.keyboardType = .emailAddress
                     textField.autocorrectionType = .no
                     textField.spellCheckingType = .no
                     
+                    fieldComp = textField
+                    
                     break
                 case .text:
+                    let textField = UITextField()
+                    textField.borderStyle = .roundedRect
+                    textField.placeholder = field.message
+                    textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
                     textField.keyboardType = .default
+                    
+                    fieldComp = textField
                     
                     break
                 }
+            } else {
+                let textField = UITextField()
+                textField.borderStyle = .roundedRect
+                textField.placeholder = field.message
+                textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+                
+                fieldComp = textField
             }
-            
-            fieldComp = textField
             
             break
         case .text:
